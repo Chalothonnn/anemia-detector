@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing - Anemia Detector</title>
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: #a10404; /* สีแดงเลือด */
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        h2 {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Processing, please wait...</h2>
+
+    <script>
+        // สมมุติว่าประมวลผล 3 วินาที
+        setTimeout(function() {
+            window.location.href = 'result.html'; // ไปยังหน้าผลลัพธ์หลังจากประมวลผลเสร็จ
+        }, 3000);
+    </script>
+</body>
+</html>

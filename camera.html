@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Photo - Anemia Detector</title>
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            color: rgb(166, 0, 0);
+        }
+
+        #cameraContainer {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            transform: scaleX(-1);
+        }
+
+        #captureButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: rgb(166, 0, 0);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 5px solid red;
+            width: 200px;
+            height: 200px;
+        }
+
+        #statusMessageContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #statusMessage {
+            background-color: #ffffff;
+            border: 2px solid rgb(166, 0, 0);
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: red;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="cameraContainer">
+        <video id="camera" autoplay muted></video>
+        <div id="circle"></div>
+    </div>
+    
+    <div id="statusMessageContainer">
+        <p id="statusMessage">Please align your eyes in the circle</p>
+    </div>
+
+    <button id="captureButton" onclick="capturePhoto()">Capture Photo</button>
+
+    <canvas id="photoCanvas" style="display:none;"></canvas>
+
+    <script>
+        let video;
+
+        async function startCamera() {
+            video = document.getElementById('camera');
+            
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+        }
+
+        function capturePhoto() {
+            const canvas = document.getElementById('photoCanvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert canvas to blob
+            canvas.toBlob(function(blob) {
+                // Save blob to localStorage
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    const base64data = reader.result;
+                    localStorage.setItem('capturedPhoto', base64data);
+                    
+                    // Stop the camera
+                    const stream = video.srcObject;
+                    const tracks = stream.getTracks();
+                    tracks.forEach(track => track.stop());
+
+                    // Navigate to processing.html
+                    window.location.href = 'processing.html';
+                }
+            }, 'image/jpeg');
+        }
+
+        startCamera();
+    </script>
+</body>
+</html>

@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anemia Detector</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Welcome to Anemia Detector</title>
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: #ffffff; /* สีแดงเลือด */
+            font-family: Arial, sans-serif;
+            color: rgb(143, 0, 0);
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: rgb(143, 0, 0);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #a10404;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Anemia Detector</h1>
-    </header>
-    <section>
-        <button onclick="startAnemiaTest()">Start Anemia Test</button>
-        <div id="testResult"></div>
-    </section>
-    <script src="scripts.js"></script>
+    <h1>Welcome to Anemia Detector</h1>
+    <button onclick="window.location.href='camera.html'">Get Started</button>
 </body>
 </html>
